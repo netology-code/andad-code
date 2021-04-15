@@ -106,7 +106,6 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$workmanager_version"
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_viewmodel_version"
     implementation "androidx.hilt:hilt-work:$hilt_work_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_compiler_version"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
