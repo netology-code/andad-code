@@ -69,7 +69,6 @@ dependencies {
     def coroutines_version = "1.4.2"
     def imagepicker_version = "1.8"
     def workmanager_version = "2.5.0"
-    def hilt_viewmodel_version = "1.0.0-alpha03"
     def hilt_compiler_version = "1.0.0-beta01"
     def hilt_work_version = "1.0.0-beta01"
 
