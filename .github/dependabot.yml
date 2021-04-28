@@ -1,0 +1,122 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/01_di/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/01_di/server"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/02_arch/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/02_arch/server"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/03_arch/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/03_arch/server"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/04_recycler/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/04_recycler/server"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/05_views/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/06_animations/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/07_animations/layout_changes"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/07_animations/recycler"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/07_animations/transition"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/08_maps/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
+  directory: "/09_multimedia/android"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
