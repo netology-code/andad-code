@@ -1,10 +1,9 @@
 package ru.netology.nmedia.ui
 
 import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,8 +18,6 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 
 @AndroidEntryPoint
 class NewPostFragment : Fragment() {
-    private val photoRequestCode = 1
-    private val cameraRequestCode = 2
 
     companion object {
         var Bundle.textArg: String? by StringArg
@@ -72,6 +69,20 @@ class NewPostFragment : Fragment() {
 
         binding.edit.requestFocus()
 
+        val pickPhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                when (it.resultCode) {
+                    ImagePicker.RESULT_ERROR -> {
+                        Snackbar.make(
+                            binding.root,
+                            ImagePicker.getError(it.data),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    Activity.RESULT_OK -> viewModel.changePhoto(it.data?.data)
+                }
+            }
+
         binding.pickPhoto.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
@@ -83,7 +94,7 @@ class NewPostFragment : Fragment() {
                         "image/jpeg",
                     )
                 )
-                .start(photoRequestCode)
+                .createIntent(pickPhotoLauncher::launch)
         }
 
         binding.takePhoto.setOnClickListener {
@@ -91,7 +102,7 @@ class NewPostFragment : Fragment() {
                 .crop()
                 .compress(2048)
                 .cameraOnly()
-                .start(cameraRequestCode)
+                .createIntent(pickPhotoLauncher::launch)
         }
 
         binding.removePhoto.setOnClickListener {
@@ -113,26 +124,6 @@ class NewPostFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == ImagePicker.RESULT_ERROR) {
-            fragmentBinding?.let {
-                Snackbar.make(it.root, ImagePicker.getError(data), Snackbar.LENGTH_LONG).show()
-            }
-            return
-        }
-        if (resultCode == Activity.RESULT_OK && requestCode == photoRequestCode) {
-            val uri: Uri? = data?.data
-            viewModel.changePhoto(uri)
-            return
-        }
-        if (resultCode == Activity.RESULT_OK && requestCode == cameraRequestCode) {
-            val uri: Uri? = data?.data
-            viewModel.changePhoto(uri)
-            return
-        }
     }
 
     override fun onDestroyView() {
