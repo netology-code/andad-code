@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.github.dhaval2404.imagepicker.constant.ImageProvider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
@@ -87,7 +88,7 @@ class NewPostFragment : Fragment() {
             ImagePicker.with(this)
                 .crop()
                 .compress(2048)
-                .galleryOnly()
+                .provider(ImageProvider.GALLERY)
                 .galleryMimeTypes(
                     arrayOf(
                         "image/png",
@@ -101,7 +102,7 @@ class NewPostFragment : Fragment() {
             ImagePicker.with(this)
                 .crop()
                 .compress(2048)
-                .cameraOnly()
+                .provider(ImageProvider.CAMERA)
                 .createIntent(pickPhotoLauncher::launch)
         }
 
