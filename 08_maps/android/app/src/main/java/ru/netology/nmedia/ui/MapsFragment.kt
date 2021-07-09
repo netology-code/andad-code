@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
@@ -18,13 +17,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.collections.MarkerManager
 import com.google.maps.android.ktx.awaitAnimateCamera
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.model.cameraPosition
-import com.google.maps.android.ktx.utils.collection.addMarker
 import ru.netology.nmedia.R
-import ru.netology.nmedia.ui.extensions.icon
+import ru.netology.nmedia.ui.extensions.MarkerManagerBridge
 
 class MapsFragment : Fragment() {
     private lateinit var googleMap: GoogleMap
@@ -95,24 +92,13 @@ class MapsFragment : Fragment() {
             }
 
             val target = LatLng(55.751999, 37.617734)
-            val markerManager = MarkerManager(googleMap)
-            val collection: MarkerManager.Collection = markerManager.newCollection().apply {
-                addMarker {
-                    position(target)
-                    icon(getDrawable(requireContext(), R.drawable.ic_netology_48dp)!!)
-                    title("The Moscow Kremlin")
-                }.apply {
-                    tag = "Any additional data" // Any
-                }
-            }
-            collection.setOnMarkerClickListener { marker ->
-                // TODO: work with marker
+            val markerManager = MarkerManagerBridge(requireContext())
+            markerManager.addMarker(googleMap, target) {
                 Toast.makeText(
                     requireContext(),
-                    (marker.tag as String),
+                    (it.tag as String),
                     Toast.LENGTH_LONG
                 ).show()
-                true
             }
 
             googleMap.awaitAnimateCamera(
