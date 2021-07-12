@@ -18,11 +18,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.collections.MarkerManager
+import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitAnimateCamera
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.model.cameraPosition
-import com.google.maps.android.ktx.utils.collection.addMarker
 import ru.netology.nmedia.R
 import ru.netology.nmedia.ui.extensions.icon
 
@@ -95,17 +94,16 @@ class MapsFragment : Fragment() {
             }
 
             val target = LatLng(55.751999, 37.617734)
-            val markerManager = MarkerManager(googleMap)
-            val collection: MarkerManager.Collection = markerManager.newCollection().apply {
-                addMarker {
-                    position(target)
-                    icon(getDrawable(requireContext(), R.drawable.ic_netology_48dp)!!)
-                    title("The Moscow Kremlin")
-                }.apply {
-                    tag = "Any additional data" // Any
-                }
+            // TODO Вернуть как было в d0f4580811f714df701009ef75c8a4e232d55945 после выхода Kotlin 1.5.21
+            googleMap.addMarker {
+                position(target)
+                icon(getDrawable(requireContext(), R.drawable.ic_netology_48dp)!!)
+                title("The Moscow Kremlin")
+            }.apply {
+                this?.tag = "Any additional data" // Any
             }
-            collection.setOnMarkerClickListener { marker ->
+            // noinspection PotentialBehaviorOverride
+            googleMap.setOnMarkerClickListener { marker ->
                 // TODO: work with marker
                 Toast.makeText(
                     requireContext(),
