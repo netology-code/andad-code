@@ -11,7 +11,4 @@ import ru.netology.nmedia.db.AppDb
 object DaoModule {
     @Provides
     fun providePostDao(db: AppDb): PostDao = db.postDao()
-
-    @Provides
-    fun providePostWorkDao(db: AppDb): PostWorkDao = db.postWorkDao()
 }

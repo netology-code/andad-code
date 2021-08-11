@@ -3,7 +3,6 @@ package ru.netology.nmedia.viewmodel
 import android.net.Uri
 import androidx.core.net.toFile
 import androidx.lifecycle.*
-import androidx.work.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +17,6 @@ import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.util.SingleLiveEvent
-import ru.netology.nmedia.work.SavePostWorker
 import javax.inject.Inject
 
 private val empty = Post(
@@ -38,7 +36,6 @@ private val noPhoto = PhotoModel()
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val repository: PostRepository,
-    private val workManager: WorkManager,
     auth: AppAuth,
 ) : ViewModel() {
     val data: LiveData<FeedModel> = auth.authStateFlow
@@ -91,26 +88,15 @@ class PostViewModel @Inject constructor(
 
     fun save() {
         edited.value?.let {
-            _postCreated.value = Unit
             viewModelScope.launch {
                 try {
-                    val id = repository.saveWork(
+                    repository.save(
                         it, _photo.value?.uri?.let { MediaUpload(it.toFile()) }
                     )
-                    val data = workDataOf(SavePostWorker.postKey to id)
-                    val constraints = Constraints.Builder()
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build()
-                    val request = OneTimeWorkRequestBuilder<SavePostWorker>()
-                        .setInputData(data)
-                        .setConstraints(constraints)
-                        .build()
-                    workManager.enqueue(request)
 
-                    _dataState.value = FeedModelState()
+                    _postCreated.value = Unit
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    _dataState.value = FeedModelState(error = true)
                 }
             }
         }
