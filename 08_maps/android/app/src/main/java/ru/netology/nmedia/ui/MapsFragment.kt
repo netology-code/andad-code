@@ -7,12 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,7 +24,10 @@ import com.google.maps.android.ktx.awaitAnimateCamera
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.model.cameraPosition
 import com.google.maps.android.ktx.utils.collection.addMarker
+import kotlinx.coroutines.launch
+import ru.netology.nmedia.MapViewModel
 import ru.netology.nmedia.R
+import ru.netology.nmedia.dto.Place
 import ru.netology.nmedia.ui.extensions.icon
 
 class MapsFragment : Fragment() {
@@ -94,34 +98,35 @@ class MapsFragment : Fragment() {
                 }
             }
 
-            val target = LatLng(55.751999, 37.617734)
             val markerManager = MarkerManager(googleMap)
-            val collection: MarkerManager.Collection = markerManager.newCollection().apply {
-                addMarker {
-                    position(target)
-                    icon(getDrawable(requireContext(), R.drawable.ic_netology_48dp)!!)
-                    title("The Moscow Kremlin")
-                }.apply {
-                    tag = "Any additional data" // Any
+            val viewModel by viewModels<MapViewModel>(ownerProducer = ::requireActivity)
+            val collection: MarkerManager.Collection = markerManager.newCollection()
+            viewModel.places.observe(viewLifecycleOwner) {
+                it.forEach {
+                    collection.addMarker {
+                        position(it.location)
+                        icon(getDrawable(requireContext(), R.drawable.ic_netology_48dp)!!)
+                        title(it.name)
+                    }.apply {
+                        tag = it
+                    }
+                }
+            }
+            viewModel.selectedPlace.observe(viewLifecycleOwner) {
+                lifecycleScope.launch {
+                    googleMap.awaitAnimateCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                            cameraPosition {
+                                target(it.location)
+                                zoom(15F)
+                            }
+                        ))
                 }
             }
             collection.setOnMarkerClickListener { marker ->
-                // TODO: work with marker
-                Toast.makeText(
-                    requireContext(),
-                    (marker.tag as String),
-                    Toast.LENGTH_LONG
-                ).show()
+                viewModel.selectPlace(marker.tag as Place)
                 true
             }
-
-            googleMap.awaitAnimateCamera(
-                CameraUpdateFactory.newCameraPosition(
-                    cameraPosition {
-                        target(target)
-                        zoom(15F)
-                    }
-                ))
         }
     }
 }
