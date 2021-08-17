@@ -114,11 +114,22 @@ class StatsView @JvmOverloads constructor(
         }
 
         var startFrom = -90F
+        // 2. Переменная, чтобы понять сколько градусов уже отрисовано
+        var totalDegrees = 0F
+        // 1. Максимальный угол отрисовки в зависимости от прогресса
+        val maxProgress = 360 * progress
         for ((index, datum) in data.withIndex()) {
             val angle = 360F * datum
+            // 5. Учитываем предыдущий прогресс и рисуем кусочек новой дуги
+            val sweepAngle = maxProgress - totalDegrees
             paint.color = colors.getOrNull(index) ?: randomColor()
-            canvas.drawArc(oval, startFrom, angle * progress, false, paint)
+            // 6. Используем угол из п. 5
+            canvas.drawArc(oval, startFrom, sweepAngle, false, paint)
             startFrom += angle
+            // 3. Заполняем
+            totalDegrees += angle
+            // 4. Делаем проверку и выходим, если прогресс не настолько большой, чтобы продолжать
+            if (totalDegrees > maxProgress) break
         }
 
         canvas.drawText(
@@ -141,7 +152,7 @@ class StatsView @JvmOverloads constructor(
                 progress = anim.animatedValue as Float
                 invalidate()
             }
-            duration = 500
+            duration = 5_000
             interpolator = LinearInterpolator()
         }.also {
             it.start()

@@ -22,8 +22,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
         val view = findViewById<StatsView>(R.id.stats)
         view.data = listOf(
-            0.25F,
-            0.25F,
+            0.5F,
             0.25F,
             0.25F,
         )
