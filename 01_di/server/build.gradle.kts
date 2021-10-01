@@ -30,7 +30,7 @@ dependencies {
         exclude("org.apache.logging.log4j")
     }
     implementation("org.apache.tika:tika-core:$tikaVersion")
-    implementation("com.google.firebase:firebase-admin:8.0.1")
+    implementation("com.google.firebase:firebase-admin:8.1.0")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
