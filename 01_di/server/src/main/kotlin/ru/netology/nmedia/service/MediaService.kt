@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.exception.BadContentTypeException
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 
