@@ -77,7 +77,7 @@ dependencies {
     def workmanager_version = "2.7.0"
     def hilt_work_version = "1.0.0"
     def paging_version = "3.0.1"
-    def maps_version = "17.0.1"
+    def maps_version = "18.0.0"
     def location_version = "18.0.0"
     def maps_ktx_version = "3.2.0"
 
