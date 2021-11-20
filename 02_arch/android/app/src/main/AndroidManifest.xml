@@ -15,7 +15,9 @@
         android:theme="@style/AppTheme"
         android:name=".application.NMediaApplication"
         android:usesCleartextTraffic="${usesCleartextTraffic}">
-        <activity android:name=".ui.AppActivity">
+        <activity
+            android:name=".ui.AppActivity"
+            android:exported="true">
             <nav-graph android:value="@navigation/nav_main" />
 
             <intent-filter>
