@@ -1,6 +1,5 @@
 package ru.netology.nmedia.service
 
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -13,26 +12,28 @@ import ru.netology.nmedia.extensions.principal
 import ru.netology.nmedia.repository.PostRepository
 import java.time.OffsetDateTime
 import java.util.stream.Collectors
-import java.util.stream.Stream
+import org.springframework.data.domain.PageRequest
+import ru.netology.nmedia.repository.UserRepository
 
 const val maxLoadSize = 100
 
 @Service
 @Transactional
 class PostService(
-    private val repository: PostRepository,
+    private val postRepository: PostRepository,
+    private val userRepository: UserRepository,
     private val commentService: CommentService,
 ) {
     fun getAll(): List<Post> {
         val principal = principal()
-        return repository
+        return postRepository
             .findAll(Sort.by(Sort.Direction.DESC, "id"))
             .map { it.toDto(principal.id) }
     }
 
     fun getById(id: Long): Post {
         val principal = principal()
-        return repository
+        return postRepository
             .findById(id)
             .orElseThrow(::NotFoundException)
             .toDto(principal.id)
@@ -40,7 +41,7 @@ class PostService(
 
     fun getLatest(count: Int): List<Post> {
         val principal = principal()
-        return repository
+        return postRepository
             .findAll(PageRequest.of(0, minOf(maxLoadSize, count), Sort.by(Sort.Direction.DESC, "id")))
             .content
             .map { it.toDto(principal.id) }
@@ -48,7 +49,7 @@ class PostService(
 
     fun getNewer(id: Long): List<Post> {
         val principal = principal()
-        return repository
+        return postRepository
             .findAllByIdGreaterThan(id, Sort.by(Sort.Direction.ASC, "id"))
             .map { it.toDto(principal.id) }
             .collect(Collectors.toList())
@@ -56,7 +57,7 @@ class PostService(
 
     fun getBefore(id: Long, count: Int): List<Post> {
         val principal = principal()
-        return repository
+        return postRepository
             .findAllByIdLessThan(id, Sort.by(Sort.Direction.DESC, "id"))
             // just for simplicity: use normal limiting in production
             .limit(minOf(maxLoadSize, count).toLong())
@@ -66,7 +67,7 @@ class PostService(
 
     fun getAfter(id: Long, count: Int): List<Post> {
         val principal = principal()
-        return repository
+        return postRepository
             .findAllByIdGreaterThan(id, Sort.by(Sort.Direction.ASC, "id"))
             // just for simplicity: use normal limiting in production
             .limit(minOf(maxLoadSize, count).toLong())
@@ -77,7 +78,7 @@ class PostService(
 
     fun save(dto: Post): Post {
         val principal = principal()
-        return repository
+        return postRepository
             .findById(dto.id)
             .orElse(
                 PostEntity.fromDto(
@@ -89,7 +90,7 @@ class PostService(
                         likedByMe = false,
                         published = OffsetDateTime.now().toEpochSecond()
                     )
-                )
+                ).copy(author = userRepository.getById(principal.id))
             )
             .let {
                 if (it.author.id != principal.id) {
@@ -97,19 +98,19 @@ class PostService(
                 }
 
                 it.content = dto.content
-                if (it.id == 0L) repository.save(it)
+                if (it.id == 0L) postRepository.save(it)
                 it
             }.toDto(principal.id)
     }
 
     fun removeById(id: Long) {
         val principal = principal()
-        repository.findByIdOrNull(id)
+        postRepository.findByIdOrNull(id)
             ?.let {
                 if (it.author.id != principal.id) {
                     throw PermissionDeniedException()
                 }
-                repository.delete(it)
+                postRepository.delete(it)
                 it
             }
             ?.also {
@@ -119,7 +120,7 @@ class PostService(
 
     fun likeById(id: Long): Post {
         val principal = principal()
-        return repository
+        return postRepository
             .findById(id)
             .orElseThrow(::NotFoundException)
             .apply {
@@ -130,7 +131,7 @@ class PostService(
 
     fun unlikeById(id: Long): Post {
         val principal = principal()
-        return repository
+        return postRepository
             .findById(id)
             .orElseThrow(::NotFoundException)
             .apply {
@@ -147,7 +148,6 @@ class PostService(
         )
     ).let {
         it.content = dto.content
-        repository.save(it)
-        it
+        postRepository.save(it)
     }.toDto(0L)
 }
