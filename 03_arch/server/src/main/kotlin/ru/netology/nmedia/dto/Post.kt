@@ -12,6 +12,7 @@ data class Post(
     val likedByMe: Boolean,
     val likes: Int = 0,
     var attachment: Attachment? = null,
+    val ownedByMe: Boolean = false,
 )
 
 data class Attachment(

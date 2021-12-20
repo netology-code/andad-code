@@ -19,25 +19,26 @@ data class PostEntity(
     var attachment: AttachmentEmbeddable?,
 ) {
     fun toDto(myId: Long) = Post(
-        id,
-        author.id,
-        author.name,
-        author.avatar,
-        content,
-        published,
-        likeOwnerIds.contains(myId),
-        likeOwnerIds.size,
-        attachment?.toDto()
+        id = id,
+        authorId = author.id,
+        author = author.name,
+        authorAvatar = author.avatar,
+        content = content,
+        published = published,
+        likedByMe = likeOwnerIds.contains(myId),
+        ownedByMe = author.id == myId,
+        likes = likeOwnerIds.size,
+        attachment = attachment?.toDto()
     )
 
     companion object {
         fun fromDto(dto: Post) = PostEntity(
-            dto.id,
-            UserEntity(dto.authorId),
-            dto.content,
-            dto.published,
-            mutableSetOf(),
-            AttachmentEmbeddable.fromDto(dto.attachment),
+            id = dto.id,
+            author = UserEntity(dto.authorId),
+            content = dto.content,
+            published = dto.published,
+            likeOwnerIds = mutableSetOf(),
+            attachment = AttachmentEmbeddable.fromDto(dto.attachment),
         )
     }
 }
