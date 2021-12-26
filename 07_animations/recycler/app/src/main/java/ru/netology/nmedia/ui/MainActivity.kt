@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         })
 
-        binding.list.itemAnimator = AppDefaultItemAnimator()
+        //binding.list.itemAnimator = AppDefaultItemAnimator()
 
         viewModel.edited.observe(this, { post ->
             if (post.id == 0L) {
