@@ -21,12 +21,15 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         super.onCreate(savedInstanceState)
 
         val view = findViewById<StatsView>(R.id.stats)
-        view.data = listOf(
-            0.25F,
-            0.25F,
-            0.25F,
-            0.25F,
-        )
+        view.postDelayed({
+            view.data = listOf(
+                0.25F,
+                0.25F,
+                0.25F,
+                0.25F,
+            )
+        }, 3000)
+
 
 //        val viewAnim = AnimationUtils.loadAnimation(
 //            this, R.anim.view_animation
