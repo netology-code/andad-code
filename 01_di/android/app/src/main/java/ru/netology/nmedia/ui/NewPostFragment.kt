@@ -16,6 +16,7 @@ import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
 import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewmodel.PostViewModel
+import ru.netology.nmedia.viewmodel.TestViewModel
 
 @AndroidEntryPoint
 class NewPostFragment : Fragment() {
@@ -28,11 +29,15 @@ class NewPostFragment : Fragment() {
         ownerProducer = ::requireParentFragment,
     )
 
+    private val testViewModel: TestViewModel by viewModels()
+
     private var fragmentBinding: FragmentNewPostBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        // Просто чтобы инициализировалась, для примера
+        testViewModel.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
