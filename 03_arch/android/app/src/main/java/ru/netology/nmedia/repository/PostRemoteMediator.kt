@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import ru.netology.nmedia.api.ApiService
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
 import ru.netology.nmedia.db.AppDb
@@ -13,19 +14,23 @@ import ru.netology.nmedia.entity.PostEntity
 import ru.netology.nmedia.entity.PostRemoteKeyEntity
 import ru.netology.nmedia.entity.toEntity
 import ru.netology.nmedia.error.ApiError
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class PostRemoteMediator(
+class PostRemoteMediator @Inject constructor(
     private val service: ApiService,
     private val db: AppDb,
     private val postDao: PostDao,
     private val postRemoteKeyDao: PostRemoteKeyDao,
+    private val appAuth: AppAuth,
 ) : RemoteMediator<Int, PostEntity>() {
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, PostEntity>
     ): MediatorResult {
         try {
+            // Test
+            println("Auth state: ${appAuth.authStateFlow.value}")
             val response = when (loadType) {
                 LoadType.REFRESH -> service.getLatest(state.config.initialLoadSize)
                 LoadType.PREPEND -> {
