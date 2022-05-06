@@ -36,48 +36,8 @@ class StatsView @JvmOverloads constructor(
         context.withStyledAttributes(attrs, R.styleable.StatsView) {
             lineWidth = getDimension(R.styleable.StatsView_lineWidth, lineWidth)
             fontSize = getDimension(R.styleable.StatsView_fontSize, fontSize)
-            colors = listOf(
-                getColor(
-                    R.styleable.StatsView_color1,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color2,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color3,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color4,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color5,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color6,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color7,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color8,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color9,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color10,
-                    randomColor()
-                )
-            )
+            val resId = getResourceId(R.styleable.StatsView_colors, 0)
+            colors = resources.getIntArray(resId).toList()
         }
     }
 

@@ -7,10 +7,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center_vertical|start"
-        app:color1="@color/colorPrimary"
-        app:color2="@color/colorAccent"
-        app:color3="#FFDE03"
-        app:color4="#FF0266"
+        app:colors="@array/colors"
         app:data="0.25,0.25,0.25,0.25"
         app:fontSize="20dp"
         app:lineWidth="20dp" />
@@ -20,10 +17,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center_vertical|end"
-        app:color1="@color/colorPrimary"
-        app:color2="@color/colorAccent"
-        app:color3="#FFDE03"
-        app:color4="#FF0266"
+        app:colors="@array/colors"
         app:data="0.25,0.25,0.25,0.25"
         app:fontSize="20dp"
         app:lineWidth="20dp" />

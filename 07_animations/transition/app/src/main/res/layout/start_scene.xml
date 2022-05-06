@@ -7,10 +7,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        app:color1="@color/colorPrimary"
-        app:color2="@color/colorAccent"
-        app:color3="#FFDE03"
-        app:color4="#FF0266"
+        app:colors="@array/colors"
         app:data="0.25,0.25,0.25,0.25"
         app:fontSize="50dp"
         app:lineWidth="20dp" />

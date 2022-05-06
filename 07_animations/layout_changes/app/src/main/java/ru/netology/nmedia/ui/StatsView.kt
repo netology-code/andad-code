@@ -1,6 +1,5 @@
 package ru.netology.nmedia.ui
 
-import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -8,12 +7,11 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.LinearInterpolator
 import androidx.core.content.withStyledAttributes
-import ru.netology.nmedia.R
-import ru.netology.nmedia.util.AndroidUtils
 import kotlin.math.min
 import kotlin.random.Random
+import ru.netology.nmedia.R
+import ru.netology.nmedia.util.AndroidUtils
 
 class StatsView @JvmOverloads constructor(
     context: Context,
@@ -38,48 +36,8 @@ class StatsView @JvmOverloads constructor(
         context.withStyledAttributes(attrs, R.styleable.StatsView) {
             lineWidth = getDimension(R.styleable.StatsView_lineWidth, lineWidth)
             fontSize = getDimension(R.styleable.StatsView_fontSize, fontSize)
-            colors = listOf(
-                getColor(
-                    R.styleable.StatsView_color1,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color2,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color3,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color4,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color5,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color6,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color7,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color8,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color9,
-                    randomColor()
-                ),
-                getColor(
-                    R.styleable.StatsView_color10,
-                    randomColor()
-                )
-            )
+            val resId = getResourceId(R.styleable.StatsView_colors, 0)
+            colors = resources.getIntArray(resId).toList()
             getString(R.styleable.StatsView_data)?.let {
                 data = it.split(",")
                     .map(String::trim)

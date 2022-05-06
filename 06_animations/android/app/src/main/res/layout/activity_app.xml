@@ -19,10 +19,7 @@
         android:layout_gravity="center"
         app:lineWidth="20dp"
         app:fontSize="50dp"
-        app:color1="@color/colorPrimary"
-        app:color2="@color/colorAccent"
-        app:color3="#FFDE03"
-        app:color4="#FF0266"
+        app:colors="@array/colors"
         />
 </FrameLayout>
 
