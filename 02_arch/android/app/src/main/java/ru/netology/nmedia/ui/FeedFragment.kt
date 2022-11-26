@@ -17,11 +17,14 @@ import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.viewmodel.AuthViewModel
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 @AndroidEntryPoint
 class FeedFragment : Fragment() {
-    private val viewModel: PostViewModel by activityViewModels()
+    private val postViewModel: PostViewModel by activityViewModels()
+    private val authViewModel: AuthViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,15 +35,15 @@ class FeedFragment : Fragment() {
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
-                viewModel.edit(post)
+                postViewModel.edit(post)
             }
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                postViewModel.likeById(post.id)
             }
 
             override fun onRemove(post: Post) {
-                viewModel.removeById(post.id)
+                postViewModel.removeById(post.id)
             }
 
             override fun onShare(post: Post) {
@@ -57,8 +60,12 @@ class FeedFragment : Fragment() {
         })
         binding.list.adapter = adapter
 
+        authViewModel.authData.observe(viewLifecycleOwner){
+            adapter.refresh()
+        }
+
         lifecycleScope.launchWhenCreated {
-            viewModel.data.collectLatest(adapter::submitData)
+            postViewModel.data.collectLatest(adapter::submitData)
         }
 
         lifecycleScope.launchWhenCreated {

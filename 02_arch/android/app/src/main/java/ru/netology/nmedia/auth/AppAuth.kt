@@ -30,6 +30,7 @@ class AppAuth @Inject constructor(
 
     private val _authStateFlow: MutableStateFlow<AuthState>
 
+
     init {
         val id = prefs.getLong(idKey, 0)
         val token = prefs.getString(tokenKey, null)

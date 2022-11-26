@@ -53,7 +53,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 )
         }
 
-        viewModel.data.observe(this) {
+        viewModel.authData.observe(this) {
             invalidateOptionsMenu()
         }
 
