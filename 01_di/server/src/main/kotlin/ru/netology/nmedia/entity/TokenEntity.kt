@@ -1,8 +1,6 @@
 package ru.netology.nmedia.entity
 
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import jakarta.persistence.*
 
 @Entity
 data class TokenEntity(
