@@ -14,7 +14,7 @@ class ScheduledPostGeneratorService(
 ) {
     private val faker = Faker()
 
-    @Scheduled(initialDelay = 1000, fixedRate = 1000)
+    @Scheduled(initialDelay = 5000, fixedRate = 5000)
     fun generate() {
         val user = userService.getByLogin("student")
 
