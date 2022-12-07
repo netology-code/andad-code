@@ -50,7 +50,7 @@ class StatsView @JvmOverloads constructor(
 
     var data: List<Float> = emptyList()
         set(value) {
-            field = value
+            field = calc(value)
             invalidate()
         }
 
@@ -70,11 +70,15 @@ class StatsView @JvmOverloads constructor(
 
         var startFrom = -90F
         for ((index, datum) in data.withIndex()) {
+
             val angle = 360F * datum
             paint.color = colors.getOrNull(index) ?: randomColor()
             canvas.drawArc(oval, startFrom, angle, false, paint)
             startFrom += angle
         }
+        paint.color = colors.first()
+        canvas.drawArc(oval, -90F, 0.0000001F, false, paint)
+
 
         canvas.drawText(
             "%.2f%%".format(data.sum() * 100),
@@ -82,6 +86,18 @@ class StatsView @JvmOverloads constructor(
             center.y + textPaint.textSize / 4,
             textPaint,
         )
+    }
+
+    private fun calc(list: List<Float>): List<Float> {
+        val newList = mutableListOf<Float>()
+        var sum = 0.0F
+        for (it in list) {
+            sum += it
+        }
+        for (it in list) {
+            newList.add(it / sum)
+        }
+        return newList
     }
 
     private fun randomColor() = Random.nextInt(0xFF000000.toInt(), 0xFFFFFFFF.toInt())
