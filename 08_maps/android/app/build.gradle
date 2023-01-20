@@ -67,7 +67,7 @@ dependencies {
     def mdc_version = "1.7.0"
     def nav_version = "2.5.3"
     def room_version = "2.4.3"
-    def firebase_version = "31.1.0"
+    def firebase_version = "31.2.0"
     def glide_version = "4.14.2"
     def retrofit_version = "2.9.0"
     def retrofitgson_version = "2.9.0"
