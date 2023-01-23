@@ -78,9 +78,9 @@ class UserService(
             token
         } ?: throw NotFoundException()
 
-    fun getByLogin(login: String): User = userRepository
+    fun getByLogin(login: String): User? = userRepository
         .findByLogin(login)
-        ?.toDto() ?: throw NotFoundException()
+        ?.toDto()
 
     fun getByToken(token: String): User? = tokenRepository
         .findByIdOrNull(token)
