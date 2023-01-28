@@ -13,6 +13,7 @@ import ru.netology.nmedia.repository.PostRepository
 import java.time.OffsetDateTime
 import java.util.stream.Collectors
 import org.springframework.data.domain.PageRequest
+import ru.netology.nmedia.entity.AttachmentEmbeddable
 import ru.netology.nmedia.repository.UserRepository
 
 const val maxLoadSize = 100
@@ -98,6 +99,7 @@ class PostService(
                 }
 
                 it.content = dto.content
+                it.attachment = AttachmentEmbeddable.fromDto(dto.attachment)
                 if (it.id == 0L) postRepository.save(it)
                 it
             }.toDto(principal.id)
