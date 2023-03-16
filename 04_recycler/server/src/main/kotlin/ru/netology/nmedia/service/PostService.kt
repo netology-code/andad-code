@@ -146,7 +146,11 @@ class PostService(
         dto.copy(
             likes = 0,
             likedByMe = false,
-            published = OffsetDateTime.now().toEpochSecond()
+            published = if (dto.published == 0L) {
+                OffsetDateTime.now().toEpochSecond()
+            } else {
+                dto.published
+            }
         )
     ).let {
         it.content = dto.content

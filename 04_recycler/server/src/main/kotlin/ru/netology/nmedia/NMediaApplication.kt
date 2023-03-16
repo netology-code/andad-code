@@ -14,6 +14,8 @@ import ru.netology.nmedia.enumeration.AttachmentType
 import ru.netology.nmedia.service.CommentService
 import ru.netology.nmedia.service.PostService
 import ru.netology.nmedia.service.UserService
+import java.time.Duration
+import java.time.OffsetDateTime
 
 @EnableScheduling
 @SpringBootApplication
@@ -30,13 +32,39 @@ class NMediaApplication {
             true,
         )
 
-        val netology = userService.create(login = "netology", pass = "secret", name = "Netology", avatar = "netology.jpg")
-        val sber = userService.create(login = "sber", pass = "secret", name = "Сбер", avatar = "sber.jpg")
-        val tcs = userService.create(login = "tcs", pass = "secret", name = "Тинькофф", avatar = "tcs.jpg")
-        val got = userService.create(login = "got", pass = "secret", name = "Game of Thrones", avatar = "got.jpg")
-        val student = userService.create(login = "student", pass = "secret", name = "Студент", avatar = "netology.jpg")
+        val netology = userService.create(
+            login = "netology",
+            pass = "secret",
+            name = "Netology",
+            avatar = "netology.jpg"
+        )
+        val sber =
+            userService.create(login = "sber", pass = "secret", name = "Сбер", avatar = "sber.jpg")
+        val tcs = userService.create(
+            login = "tcs",
+            pass = "secret",
+            name = "Тинькофф",
+            avatar = "tcs.jpg"
+        )
+        val got = userService.create(
+            login = "got",
+            pass = "secret",
+            name = "Game of Thrones",
+            avatar = "got.jpg"
+        )
+        val student = userService.create(
+            login = "student",
+            pass = "secret",
+            name = "Студент",
+            avatar = "netology.jpg"
+        )
 
         userService.saveInitialToken(student.id, "x-token")
+
+        val currentTime = OffsetDateTime.now()
+        val yesterday = currentTime.minus(Duration.ofDays(1))
+        val weekAgo = currentTime.minus(Duration.ofDays(7))
+        val twoWeeksAgo = currentTime.minus(Duration.ofDays(14))
 
         val firstPost = postService.saveInitial(
             Post(
@@ -44,8 +72,8 @@ class NMediaApplication {
                 authorId = netology.id,
                 author = netology.name,
                 authorAvatar = netology.avatar,
-                content = "Привет, это новая Нетология!",
-                published = 0,
+                content = "15 дней назад",
+                published = twoWeeksAgo.minus(Duration.ofDays(1)).toEpochSecond(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -56,8 +84,8 @@ class NMediaApplication {
                 authorId = sber.id,
                 author = sber.name,
                 authorAvatar = sber.avatar,
-                content = "Привет, это новый Сбер!",
-                published = 0,
+                content = "Две недели назад",
+                published = twoWeeksAgo.toEpochSecond(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -68,8 +96,8 @@ class NMediaApplication {
                 authorId = tcs.id,
                 author = tcs.name,
                 authorAvatar = tcs.avatar,
-                content = "Нам и так норм!",
-                published = 0,
+                content = "13 дней назад",
+                published = twoWeeksAgo.plus(Duration.ofDays(1)).toEpochSecond(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -80,8 +108,8 @@ class NMediaApplication {
                 authorId = netology.id,
                 author = netology.name,
                 authorAvatar = netology.avatar,
-                content = "Подкасты любят за возможность проводить время с пользой и слушать познавательные лекции или беседы во время прогулок или домашних дел. Интересно, что запустить свой подкаст и обсуждать интересные темы может любой.",
-                published = 0,
+                content = "Десять дней назад",
+                published = weekAgo.minus(Duration.ofDays(3)).toEpochSecond(),
                 likedByMe = false,
                 likes = 0,
                 attachment = Attachment(
@@ -97,8 +125,8 @@ class NMediaApplication {
                 authorId = sber.id,
                 author = sber.name,
                 authorAvatar = sber.avatar,
-                content = "Появился новый способ мошенничества \uD83D\uDE21 Злоумышленники звонят от имени банка и говорят, что для клиента выпущена новая, особо защищённая карта, которую можно добавить в приложение Кошелёк на смартфоне. Под диктовку мошенника человек привязывает к Кошельку его карту, причём указывает своё имя. Если карту пополнить, деньги уйдут мошеннику.\n\nДело в том, что в Кошелёк можно добавить любую, даже чужую карту, а имя поставить какое угодно. Но чужая банковская карта не будет отображаться, например, в СберБанк Онлайн.",
-                published = 0,
+                content = "Девять дней назад",
+                published = weekAgo.minus(Duration.ofDays(2)).toEpochSecond(),
                 likedByMe = false,
                 likes = 0,
                 attachment = Attachment(
@@ -114,8 +142,56 @@ class NMediaApplication {
                 authorId = student.id,
                 author = student.name,
                 authorAvatar = student.avatar,
-                content = "Just demo post for check authentication",
-                published = 0,
+                content = "Восемь дней назад",
+                published = weekAgo.minus(Duration.ofDays(1)).toEpochSecond(),
+                likedByMe = false,
+                likes = 0,
+            )
+        )
+        val seventhPost = postService.saveInitial(
+            Post(
+                id = 0,
+                authorId = student.id,
+                author = student.name,
+                authorAvatar = student.avatar,
+                content = "Пост был написан неделю назад",
+                published = weekAgo.toEpochSecond(),
+                likedByMe = false,
+                likes = 0,
+            )
+        )
+        val eighthPost = postService.saveInitial(
+            Post(
+                id = 0,
+                authorId = student.id,
+                author = student.name,
+                authorAvatar = student.avatar,
+                content = "Пост был написан 6 дней назад",
+                published = weekAgo.plus(Duration.ofDays(1)).toEpochSecond(),
+                likedByMe = false,
+                likes = 0,
+            )
+        )
+        val ninthPost = postService.saveInitial(
+            Post(
+                id = 0,
+                authorId = student.id,
+                author = student.name,
+                authorAvatar = student.avatar,
+                content = "Пост был написан 2 дня назад",
+                published = yesterday.minus(Duration.ofDays(1)).toEpochSecond(),
+                likedByMe = false,
+                likes = 0,
+            )
+        )
+        val tenthPost = postService.saveInitial(
+            Post(
+                id = 0,
+                authorId = student.id,
+                author = student.name,
+                authorAvatar = student.avatar,
+                content = "Пост был написан вчера",
+                published = yesterday.toEpochSecond(),
                 likedByMe = false,
                 likes = 0,
             )
