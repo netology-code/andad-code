@@ -13,6 +13,7 @@ import ru.netology.nmedia.repository.PostRepository
 import java.time.OffsetDateTime
 import java.util.stream.Collectors
 import org.springframework.data.domain.PageRequest
+import ru.netology.nmedia.dto.NewerCount
 import ru.netology.nmedia.entity.AttachmentEmbeddable
 import ru.netology.nmedia.repository.UserRepository
 
@@ -43,7 +44,13 @@ class PostService(
     fun getLatest(count: Int): List<Post> {
         val principal = principal()
         return postRepository
-            .findAll(PageRequest.of(0, minOf(maxLoadSize, count), Sort.by(Sort.Direction.DESC, "id")))
+            .findAll(
+                PageRequest.of(
+                    0,
+                    minOf(maxLoadSize, count),
+                    Sort.by(Sort.Direction.DESC, "id")
+                )
+            )
             .content
             .map { it.toDto(principal.id) }
     }
@@ -54,6 +61,13 @@ class PostService(
             .findAllByIdGreaterThan(id, Sort.by(Sort.Direction.ASC, "id"))
             .map { it.toDto(principal.id) }
             .collect(Collectors.toList())
+    }
+
+    fun getNewerCount(id: Long): NewerCount {
+        return postRepository
+            .findAllByIdGreaterThan(id, Sort.by(Sort.Direction.ASC, "id"))
+            .count()
+            .let(::NewerCount)
     }
 
     fun getBefore(id: Long, count: Int): List<Post> {
@@ -146,11 +160,7 @@ class PostService(
         dto.copy(
             likes = 0,
             likedByMe = false,
-            published = if (dto.published == 0L) {
-                OffsetDateTime.now().toEpochSecond()
-            } else {
-                dto.published
-            }
+            published = OffsetDateTime.now().toEpochSecond()
         )
     ).let {
         it.content = dto.content

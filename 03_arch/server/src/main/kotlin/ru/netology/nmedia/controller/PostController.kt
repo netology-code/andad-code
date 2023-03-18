@@ -22,6 +22,9 @@ class PostController(private val service: PostService) {
     @GetMapping("/{id}/newer")
     fun getNewer(@PathVariable id: Long) = service.getNewer(id)
 
+    @GetMapping("/{id}/newer-count")
+    fun getNewerCount(@PathVariable id: Long) = service.getNewerCount(id)
+
     @GetMapping("/{id}/before")
     fun getBefore(@PathVariable id: Long, @RequestParam count: Int) = service.getBefore(id, count)
 
