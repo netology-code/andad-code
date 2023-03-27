@@ -44,7 +44,7 @@ dependencies {
     def coordinatorlayout_version = "1.2.0"
     def recyclerview_version = "1.2.1"
     def activity_version = "1.6.1"
-    def mdc_version = "1.7.0"
+    def mdc_version = "1.8.0"
     def coroutines_version = "1.6.4"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
