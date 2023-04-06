@@ -1,5 +1,7 @@
 # Код для демонстраций по курсу «Продвинутая разработка под Android»
 
+**Важно**: для запуска сервера используйте java 17 и выше. [Инструкция](https://github.com/netology-code/andin-code/raw/master/use_java_17.mov).
+
 ## Блок 1: Архитектура приложения
 
 1.1 [x] [Dependency Injection](01_di)
