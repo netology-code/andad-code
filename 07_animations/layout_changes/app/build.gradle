@@ -4,6 +4,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
+    namespace "ru.netology.nmedia"
+
     compileSdkVersion 33
 
     defaultConfig {
@@ -28,6 +30,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     buildTypes {
