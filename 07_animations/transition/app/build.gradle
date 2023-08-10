@@ -60,7 +60,7 @@ dependencies {
     def activity_version = "1.7.2"
     def lifecycle_version = "2.6.1"
     def mdc_version = "1.9.0"
-    def nav_version = "2.6.0"
+    def nav_version = "2.7.0"
     def room_version = "2.5.1"
     def glide_version = "4.15.1"
     def retrofit_version = "2.9.0"
