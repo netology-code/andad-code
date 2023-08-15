@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -57,17 +60,42 @@ class FeedFragment : Fragment() {
         })
         binding.list.adapter = adapter
 
+        // Устаревший вариант
+        /*
         lifecycleScope.launchWhenCreated {
             viewModel.data.collectLatest(adapter::submitData)
         }
+         */
 
+        // Актуальный вариант
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.data.collectLatest(adapter::submitData)
+            }
+        }
+
+        // Устаревший вариант
+        /*
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collectLatest { state ->
+                binding.swiperefresh.isRefreshing =
+                    state.refresh is LoadState.Loading ||
+                    state.prepend is LoadState.Loading ||
+                    state.append is LoadState.Loading
+            }
+        }
+         */
+
+        // Актуальный вариант
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.loadStateFlow.collectLatest { state ->
                     binding.swiperefresh.isRefreshing =
                         state.refresh is LoadState.Loading ||
-                        state.prepend is LoadState.Loading ||
-                        state.append is LoadState.Loading
+                                state.prepend is LoadState.Loading ||
+                                state.append is LoadState.Loading
                 }
+            }
         }
 
         binding.swiperefresh.setOnRefreshListener(adapter::refresh)
