@@ -21,16 +21,16 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         super.onCreate(savedInstanceState)
 
         val view = findViewById<StatsView>(R.id.stats)
-        view.postDelayed({
-            view.data = listOf(
-                0.25F,
-                0.25F,
-                0.25F,
-                0.25F,
-            )
-        }, 3000)
+        view.data = listOf(
+            0.25F,
+            0.25F,
+            0.25F,
+            0.25F,
+        )
 
 
+// Пример 1 android.view.animation
+//        val label = findViewById<TextView>(R.id.label)
 //        val viewAnim = AnimationUtils.loadAnimation(
 //            this, R.anim.view_animation
 //        ).apply {
@@ -51,19 +51,25 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 //        }
 //
 //        view.startAnimation(viewAnim)
+// Конец примера 1
 
+// Пример 2 ObjectAnimator через рефлексию
 //        ObjectAnimator.ofFloat(view, "alpha", 0.25F, 1F).apply {
 //            startDelay = 500
 //            duration = 300
 //            interpolator = BounceInterpolator()
 //        }.start()
+// Конец примера 2
 
+// Пример 3 ObjectAnimator через готовые property
 //        ObjectAnimator.ofFloat(view, View.ALPHA, 0.25F, 1F).apply {
 //            startDelay = 500
 //            duration = 300
 //            interpolator = BounceInterpolator()
 //        }.start()
+// Конец примера 3
 
+// Пример 4 Анимация нескольких свойств через PropertyValuesHolder
 //        val rotation = PropertyValuesHolder.ofFloat(View.ROTATION, 0F, 360F)
 //        val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0F, 1F)
 //        ObjectAnimator.ofPropertyValuesHolder(view, rotation, alpha)
@@ -72,7 +78,9 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 //                duration = 500
 //                interpolator = LinearInterpolator()
 //            }.start()
+// Конец примера 4
 
+// Пример 5 Использование ViewPropertyAnimator
 //        view.animate()
 //            .rotation(360F)
 //            .scaleX(1.2F)
@@ -81,7 +89,9 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 //            .setStartDelay(500)
 //            .setDuration(500)
 //            .start()
+// Конец примера 5
 
+// Пример 6 Комбинация нескольких анимаций через AnimatorSet
 //        val alpha = ObjectAnimator.ofFloat(view, View.ALPHA, 0.25F, 1F).apply {
 //            duration = 300
 //            interpolator = LinearInterpolator()
@@ -96,5 +106,6 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 //            startDelay = 500
 //            playSequentially(scale, alpha)
 //        }.start()
+// Конец примера 6
     }
 }
