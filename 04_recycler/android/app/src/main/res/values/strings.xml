@@ -29,4 +29,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_out">Sign Out</string>
     <string name="ad_description">ad</string>
+    <string name="today">today</string>
+    <string name="yesterday">yesterday</string>
+    <string name="week_ago">week ago</string>
 </resources>

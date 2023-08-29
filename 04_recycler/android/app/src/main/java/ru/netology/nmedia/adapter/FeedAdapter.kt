@@ -11,7 +11,9 @@ import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.databinding.CardAdBinding
+import ru.netology.nmedia.databinding.CardDateBinding
 import ru.netology.nmedia.dto.Ad
+import ru.netology.nmedia.dto.DateSeparator
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.view.load
@@ -22,6 +24,7 @@ class FeedAdapter(
 ) : PagingDataAdapter<FeedItem, RecyclerView.ViewHolder>(FeedItemDiffCallback()) {
     private val typeAd = 0
     private val typePost = 1
+    private val typeDate = 2
 
     interface OnInteractionListener {
         fun onLike(post: Post) {}
@@ -35,6 +38,7 @@ class FeedAdapter(
         return when (getItem(position)) {
             is Ad -> typeAd
             is Post -> typePost
+            is DateSeparator -> typeDate
             null -> throw IllegalArgumentException("unknown item type")
         }
     }
@@ -46,10 +50,16 @@ class FeedAdapter(
                 CardAdBinding.inflate(layoutInflater, parent, false),
                 onInteractionListener
             )
+
             typePost -> PostViewHolder(
                 CardPostBinding.inflate(layoutInflater, parent, false),
                 onInteractionListener
             )
+
+            typeDate -> DateViewHolder(
+                CardDateBinding.inflate(layoutInflater, parent, false),
+            )
+
             else -> throw IllegalArgumentException("unknown view type: $viewType")
         }
     }
@@ -60,6 +70,7 @@ class FeedAdapter(
             when (it) {
                 is Post -> (holder as? PostViewHolder)?.bind(it)
                 is Ad -> (holder as? AdViewHolder)?.bind(it)
+                is DateSeparator -> (holder as? DateViewHolder)?.bind(it)
             }
         }
     }
@@ -91,6 +102,7 @@ class FeedAdapter(
                                     onInteractionListener.onRemove(post)
                                     true
                                 }
+
                                 R.id.edit -> {
                                     onInteractionListener.onEdit(post)
                                     true
@@ -125,6 +137,21 @@ class FeedAdapter(
                     onInteractionListener.onAdClick(ad)
                 }
             }
+        }
+    }
+
+    class DateViewHolder(
+        private val binding: CardDateBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(date: DateSeparator) {
+            val resource = when (date.type) {
+                DateSeparator.Type.TODAY -> R.string.today
+                DateSeparator.Type.YESTERDAY -> R.string.yesterday
+                DateSeparator.Type.WEEK_AGO -> R.string.week_ago
+            }
+
+            binding.root.setText(resource)
         }
     }
 

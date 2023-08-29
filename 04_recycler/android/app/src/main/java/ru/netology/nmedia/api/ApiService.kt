@@ -1,5 +1,10 @@
 package ru.netology.nmedia.api
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -11,6 +16,10 @@ import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.dto.PushToken
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 
 private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
 
@@ -23,7 +32,25 @@ fun okhttp(vararg interceptors: Interceptor): OkHttpClient = OkHttpClient.Builde
     .build()
 
 fun retrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
+    .addConverterFactory(
+        GsonConverterFactory.create(
+            GsonBuilder()
+                .registerTypeAdapter(
+                    LocalDateTime::class.java,
+                    object : TypeAdapter<LocalDateTime>() {
+                        override fun write(out: JsonWriter?, value: LocalDateTime) {
+                            value.atZone(ZoneId.systemDefault()).toInstant()
+                        }
+
+                        override fun read(reader: JsonReader): LocalDateTime =
+                            LocalDateTime.ofInstant(
+                                Instant.ofEpochSecond(reader.nextLong()),
+                                ZoneId.systemDefault(),
+                            )
+                    })
+                .create()
+        )
+    )
     .baseUrl(BASE_URL)
     .client(client)
     .build()

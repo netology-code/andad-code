@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Ad
+import ru.netology.nmedia.dto.DateSeparator
 import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
@@ -17,6 +18,7 @@ import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.util.SingleLiveEvent
+import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -28,10 +30,32 @@ private val empty = Post(
     authorAvatar = "",
     likedByMe = false,
     likes = 0,
-    published = 0,
+    published = LocalDateTime.now(),
 )
 
 private val noPhoto = PhotoModel()
+
+private val today = LocalDateTime.now()
+private val yesterday = today.minusDays(1)
+private val weekAgo = today.minusDays(2)
+
+fun Post?.isToday(): Boolean {
+    if (this == null) return false
+
+    return published > yesterday
+}
+
+fun Post?.isYesterday(): Boolean {
+    if (this == null) return false
+
+    return today.year == published.year && published.dayOfYear == yesterday.dayOfYear
+}
+
+fun Post?.isWeekAgo(): Boolean {
+    if (this == null) return false
+
+    return published < weekAgo
+}
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -43,17 +67,31 @@ class PostViewModel @Inject constructor(
         .data
         .map { pagingData ->
             pagingData.insertSeparators(
-                generator = { before, after ->
-                    if (before?.id?.rem(5) != 0L) null else
-                        Ad(
-                            Random.nextLong(),
-                            "https://netology.ru",
-                            "figma.jpg"
-                        )
-                }
+                terminalSeparatorType = TerminalSeparatorType.SOURCE_COMPLETE,
+                generator = ::insertDateSeparators
             )
         }
         .cachedIn(viewModelScope)
+
+    private fun insertDateSeparators(before: Post?, after: Post?): DateSeparator? {
+        return when {
+            before == null && after.isToday() -> {
+                DateSeparator(DateSeparator.Type.TODAY)
+            }
+
+            (before == null && after.isYesterday()) || (before.isToday() && after.isYesterday()) -> {
+                DateSeparator(DateSeparator.Type.YESTERDAY)
+            }
+
+            before.isYesterday() && after.isWeekAgo() -> {
+                DateSeparator(DateSeparator.Type.WEEK_AGO)
+            }
+
+            else -> {
+                null
+            }
+        }
+    }
 
     val data: Flow<PagingData<FeedItem>> = auth.authStateFlow
         .flatMapLatest { (myId, _) ->
