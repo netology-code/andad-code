@@ -1,6 +1,9 @@
 package ru.netology.nmedia.ui
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -69,6 +72,8 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
         checkGoogleApiAvailability()
 
+        requestNotificationsPermission()
+
         addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_main, menu)
@@ -86,20 +91,37 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                         auth.setAuth(5, "x-token")
                         true
                     }
+
                     R.id.signup -> {
                         // TODO: just hardcode it, implementation must be in homework
                         auth.setAuth(5, "x-token")
                         true
                     }
+
                     R.id.signout -> {
                         // TODO: just hardcode it, implementation must be in homework
                         auth.removeAuth()
                         true
                     }
+
                     else -> false
                 }
 
         })
+    }
+
+    private fun requestNotificationsPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return
+        }
+
+        val permission = Manifest.permission.POST_NOTIFICATIONS
+
+        if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+
+        requestPermissions(arrayOf(permission), 1)
     }
 
     private fun checkGoogleApiAvailability() {
