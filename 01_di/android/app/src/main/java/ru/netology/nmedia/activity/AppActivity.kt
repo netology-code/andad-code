@@ -1,4 +1,4 @@
-package ru.netology.nmedia.ui
+package ru.netology.nmedia.activity
 
 import android.Manifest
 import android.content.Intent
@@ -19,7 +19,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.ui.NewPostFragment.Companion.textArg
+import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.viewmodel.AuthViewModel
 import javax.inject.Inject
 

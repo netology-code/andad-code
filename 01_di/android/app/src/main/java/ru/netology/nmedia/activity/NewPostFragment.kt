@@ -1,4 +1,4 @@
-package ru.netology.nmedia.ui
+package ru.netology.nmedia.activity
 
 import android.app.Activity
 import android.os.Bundle
