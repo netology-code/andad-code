@@ -82,7 +82,7 @@ dependencies {
     def paging_version = "3.3.0"
     def maps_version = "19.0.0"
     def location_version = "21.2.0"
-    def maps_ktx_version = "5.0.0"
+    def maps_ktx_version = "5.1.1"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.core:core-ktx:$core_version"
