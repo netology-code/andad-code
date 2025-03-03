@@ -48,7 +48,7 @@ android {
 dependencies {
     def core_version = "1.15.0"
     def appcompat_version = "1.7.0"
-    def constraintlayout_version = "2.2.0"
+    def constraintlayout_version = "2.2.1"
     def junit_version = "4.13.2"
     def ext_junit_version = "1.2.1"
     def espresso_core_version = "3.6.1"
