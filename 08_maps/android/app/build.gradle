@@ -79,7 +79,7 @@ dependencies {
     def imagepicker_version = "2.1"
     def workmanager_version = "2.9.0"
     def hilt_work_version = "1.2.0"
-    def paging_version = "3.3.0"
+    def paging_version = "3.3.6"
     def maps_version = "19.0.0"
     def location_version = "21.3.0"
     def maps_ktx_version = "5.1.1"
