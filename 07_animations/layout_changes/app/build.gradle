@@ -19,6 +19,8 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -71,6 +73,7 @@ dependencies {
     def workmanager_version = "2.10.0"
     def hilt_work_version = "1.2.0"
     def paging_version = "3.3.6"
+    def core_desugaring_version = "2.1.5"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.core:core-ktx:$core_version"
@@ -102,6 +105,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation "androidx.hilt:hilt-work:$hilt_work_version"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$core_desugaring_version"
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
