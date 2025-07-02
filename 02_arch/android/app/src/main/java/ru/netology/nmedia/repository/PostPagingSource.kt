@@ -2,6 +2,7 @@ package ru.netology.nmedia.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import kotlinx.coroutines.CancellationException
 import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.error.ApiError
@@ -40,6 +41,10 @@ class PostPagingSource (
                 nextKey = nextKey,
             )
         } catch (e: Exception) {
+            if (e is CancellationException) {
+                throw e
+            }
+
             return LoadResult.Error(e)
         }
     }

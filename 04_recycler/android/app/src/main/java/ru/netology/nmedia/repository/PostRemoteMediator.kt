@@ -5,6 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import kotlinx.coroutines.CancellationException
 import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dao.PostRemoteKeyDao
@@ -50,6 +51,10 @@ class PostRemoteMediator(
                 response.message(),
             )
 
+            if (body.isEmpty()) {
+                return MediatorResult.Success(endOfPaginationReached = true)
+            }
+
             db.withTransaction {
                 when (loadType) {
                     LoadType.REFRESH -> {
@@ -87,8 +92,12 @@ class PostRemoteMediator(
                 }
                 postDao.insert(body.toEntity())
             }
-            return MediatorResult.Success(endOfPaginationReached = body.isEmpty())
+            return MediatorResult.Success(endOfPaginationReached = false)
         } catch (e: Exception) {
+            if (e is CancellationException) {
+                throw e
+            }
+
             return MediatorResult.Error(e)
         }
     }
