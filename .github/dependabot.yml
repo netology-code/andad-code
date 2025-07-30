@@ -113,6 +113,14 @@ updates:
   assignees:
   - Onotole1
 - package-ecosystem: gradle
+  directory: "/08_maps/android-yandex"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  assignees:
+  - Onotole1
+- package-ecosystem: gradle
   directory: "/09_multimedia/android"
   schedule:
     interval: daily
