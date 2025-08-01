@@ -11,16 +11,28 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
-import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import ru.netology.nmedia.R
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import ru.netology.nmedia.databinding.ActivityAppBinding
 
 @SuppressLint("SetTextI18n")
-class AppActivity : AppCompatActivity(R.layout.activity_app) {
+class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val view = findViewById<StatsView>(R.id.stats)
+        enableEdgeToEdge()
+
+        val binding = ActivityAppBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        val view = binding.stats
         view.data = listOf(
             0.25F,
             0.25F,
@@ -30,7 +42,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
 
 // Пример 1 android.view.animation
-//        val label = findViewById<TextView>(R.id.label)
+//        val label = binding.label
 //        val viewAnim = AnimationUtils.loadAnimation(
 //            this, R.anim.view_animation
 //        ).apply {
