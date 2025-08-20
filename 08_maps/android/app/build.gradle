@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "ru.netology.nmedia"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 35
         versionCode 1
         versionName "1.0"
@@ -72,7 +72,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "com.google.android.material:material:$mdc_version"
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")
-    implementation "com.google.firebase:firebase-messaging-ktx"
+    implementation "com.google.firebase:firebase-messaging"
 
     implementation "com.google.android.gms:play-services-location:$location_version"
     implementation "com.google.android.gms:play-services-maps:$maps_version"
