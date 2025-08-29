@@ -56,7 +56,7 @@ dependencies {
     def activity_version = "1.10.1"
     def lifecycle_version = "2.9.2"
     def mdc_version = "1.12.0"
-    def firebase_version = "34.1.0"
+    def firebase_version = "34.2.0"
     def maps_version = "19.2.0"
     def location_version = "21.3.0"
     def maps_ktx_version = "5.2.0"
