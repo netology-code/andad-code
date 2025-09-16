@@ -51,7 +51,7 @@ dependencies {
     def lifecycle_version = "2.9.2"
     def mdc_version = "1.12.0"
     def core_desugaring_version = "2.1.5"
-    def yandex_maps_version = "4.19.0-navikit"
+    def yandex_maps_version = "4.22.0-navikit"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.core:core-ktx:$core_version"
