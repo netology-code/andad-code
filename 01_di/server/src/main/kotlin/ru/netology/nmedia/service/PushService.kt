@@ -12,7 +12,7 @@ import ru.netology.nmedia.repository.PushTokenRepository
 @Service
 @Transactional
 class PushService(
-    @Lazy
+    @param:Lazy
     private val messaging: FirebaseMessaging,
     private val pushTokenRepository: PushTokenRepository,
     private val objectMapper: ObjectMapper,
