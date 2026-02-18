@@ -23,7 +23,7 @@ dependencies {
     }
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.apache.tika:tika-core:3.2.3")
-    implementation("com.google.firebase:firebase-admin:9.7.0")
+    implementation("com.google.firebase:firebase-admin:9.7.1")
     runtimeOnly("com.h2database:h2")
     implementation("org.bouncycastle:bctls-jdk15on:1.70")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
