@@ -16,7 +16,7 @@ class ScheduledPostGeneratorService(
 
     @Scheduled(initialDelay = 60 * 1000, fixedRate = 5 * 60 * 1000)
     fun generate() {
-        val user = userService.getByLogin("got")
+        val user = userService.getByLogin("got") ?: return
 
         postService.saveInitial(
             Post(

@@ -21,7 +21,6 @@ dependencies {
     implementation("com.github.javafaker:javafaker:1.0.2") {
         exclude(module = "snakeyaml")
     }
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.apache.tika:tika-core:3.2.3")
     implementation("com.google.firebase:firebase-admin:9.7.0")
