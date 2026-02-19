@@ -1,5 +1,5 @@
 [versions]
-agp = "8.13.2"
+agp = "9.0.1"
 converterGson = "3.0.0"
 glide = "5.0.5"
 imagepicker = "2.1"
