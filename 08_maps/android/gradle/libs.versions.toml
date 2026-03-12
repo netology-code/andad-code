@@ -2,7 +2,7 @@
 agp = "8.13.2"
 kotlin = "2.3.0"
 googleServices = "4.4.4"
-coreKtx = "1.17.0"
+coreKtx = "1.18.0"
 appcompat = "1.7.1"
 mapsKtx = "5.2.2"
 material = "1.13.0"
