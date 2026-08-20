@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest
 import ru.netology.nmedia.dto.NewerCount
 import ru.netology.nmedia.entity.AttachmentEmbeddable
 import ru.netology.nmedia.repository.UserRepository
+import java.time.Instant
 
 const val maxLoadSize = 100
 
@@ -103,7 +104,7 @@ class PostService(
                         authorAvatar = principal.avatar,
                         likes = 0,
                         likedByMe = false,
-                        published = OffsetDateTime.now().toEpochSecond()
+                        published = Instant.now(),
                     )
                 ).copy(author = userRepository.getReferenceById(principal.id))
             )
@@ -160,11 +161,7 @@ class PostService(
         dto.copy(
             likes = 0,
             likedByMe = false,
-            published = if (dto.published == 0L) {
-                OffsetDateTime.now().toEpochSecond()
-            } else {
-                dto.published
-            }
+            published = dto.published ?: Instant.now()
         )
     ).let {
         it.content = dto.content

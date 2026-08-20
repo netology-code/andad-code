@@ -15,6 +15,7 @@ import ru.netology.nmedia.service.CommentService
 import ru.netology.nmedia.service.PostService
 import ru.netology.nmedia.service.UserService
 import java.time.Duration
+import java.time.Instant
 import java.time.OffsetDateTime
 
 @EnableScheduling
@@ -73,7 +74,7 @@ class NMediaApplication {
                 author = netology.name,
                 authorAvatar = netology.avatar,
                 content = "15 дней назад",
-                published = twoWeeksAgo.minus(Duration.ofDays(1)).toEpochSecond(),
+                published = twoWeeksAgo.minus(Duration.ofDays(1)).toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -85,7 +86,7 @@ class NMediaApplication {
                 author = sber.name,
                 authorAvatar = sber.avatar,
                 content = "Две недели назад",
-                published = twoWeeksAgo.toEpochSecond(),
+                published = twoWeeksAgo.toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -97,7 +98,7 @@ class NMediaApplication {
                 author = tcs.name,
                 authorAvatar = tcs.avatar,
                 content = "13 дней назад",
-                published = twoWeeksAgo.plus(Duration.ofDays(1)).toEpochSecond(),
+                published = twoWeeksAgo.plus(Duration.ofDays(1)).toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -109,7 +110,7 @@ class NMediaApplication {
                 author = netology.name,
                 authorAvatar = netology.avatar,
                 content = "Десять дней назад",
-                published = weekAgo.minus(Duration.ofDays(3)).toEpochSecond(),
+                published = weekAgo.minus(Duration.ofDays(3)).toInstant(),
                 likedByMe = false,
                 likes = 0,
                 attachment = Attachment(
@@ -126,7 +127,7 @@ class NMediaApplication {
                 author = sber.name,
                 authorAvatar = sber.avatar,
                 content = "Девять дней назад",
-                published = weekAgo.minus(Duration.ofDays(2)).toEpochSecond(),
+                published = weekAgo.minus(Duration.ofDays(2)).toInstant(),
                 likedByMe = false,
                 likes = 0,
                 attachment = Attachment(
@@ -143,7 +144,7 @@ class NMediaApplication {
                 author = student.name,
                 authorAvatar = student.avatar,
                 content = "Восемь дней назад",
-                published = weekAgo.minus(Duration.ofDays(1)).toEpochSecond(),
+                published = weekAgo.minus(Duration.ofDays(1)).toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -155,7 +156,7 @@ class NMediaApplication {
                 author = student.name,
                 authorAvatar = student.avatar,
                 content = "Пост был написан неделю назад",
-                published = weekAgo.toEpochSecond(),
+                published = weekAgo.toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -167,7 +168,7 @@ class NMediaApplication {
                 author = student.name,
                 authorAvatar = student.avatar,
                 content = "Пост был написан 6 дней назад",
-                published = weekAgo.plus(Duration.ofDays(1)).toEpochSecond(),
+                published = weekAgo.plus(Duration.ofDays(1)).toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -179,7 +180,7 @@ class NMediaApplication {
                 author = student.name,
                 authorAvatar = student.avatar,
                 content = "Пост был написан 2 дня назад",
-                published = yesterday.minus(Duration.ofDays(1)).toEpochSecond(),
+                published = yesterday.minus(Duration.ofDays(1)).toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -191,7 +192,7 @@ class NMediaApplication {
                 author = student.name,
                 authorAvatar = student.avatar,
                 content = "Пост был написан вчера",
-                published = yesterday.toEpochSecond(),
+                published = yesterday.toInstant(),
                 likedByMe = false,
                 likes = 0,
             )
@@ -205,7 +206,7 @@ class NMediaApplication {
                     author = netology.name,
                     authorAvatar = netology.avatar,
                     content = "Отлично!",
-                    published = 0,
+                    published = Instant.now(),
                     likedByMe = false,
                     likes = 0,
                 )
@@ -218,7 +219,7 @@ class NMediaApplication {
                     author = sber.name,
                     authorAvatar = sber.avatar,
                     content = "Мы тоже обновились!",
-                    published = 0,
+                    published = Instant.now(),
                     likedByMe = false,
                     likes = 0,
                 )
@@ -231,7 +232,7 @@ class NMediaApplication {
                     author = netology.name,
                     authorAvatar = netology.avatar,
                     content = "Новый логотип прекрасен!",
-                    published = 0,
+                    published = Instant.now(),
                     likedByMe = false,
                     likes = 0,
                 )
